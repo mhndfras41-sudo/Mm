@@ -1,20 +1,16 @@
--- 👑 23l8l22 | PERMANENT PANEL (لا يختفي عند الموت) 👑
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 
--- [الحل]: هنا نحدد أن الواجهة لا تُحذف عند الـ Respawn
 local ScreenGui = Instance.new("ScreenGui", LocalPlayer:WaitForChild("PlayerGui"))
 ScreenGui.Name = "MasterPanel_23l8l22"
-ScreenGui.ResetOnSpawn = false -- هذا السطر يمنع الواجهة من الاختفاء عند الموت
+ScreenGui.ResetOnSpawn = false 
 
--- [باقي كود الواجهة]
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Size = UDim2.new(0, 250, 0, 320); MainFrame.Position = UDim2.new(0.5, -125, 0.5, -160)
 MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 10); MainFrame.BorderSizePixel = 0
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 12)
 
--- نظام السحب (شغال دايم)
 local dragging, dragStart, startPos
 MainFrame.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -29,7 +25,6 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 UserInputService.InputEnded:Connect(function(input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then dragging = false end end)
 
--- نظام النيون
 local UIStroke = Instance.new("UIStroke", MainFrame); UIStroke.Thickness = 3
 task.spawn(function()
     while ScreenGui.Parent do
@@ -37,7 +32,6 @@ task.spawn(function()
     end
 end)
 
--- الأزرار
 local HD_Remote = game:GetService("ReplicatedStorage"):WaitForChild("HDAdminHDClient", 5):WaitForChild("Signals", 5):WaitForChild("RequestCommandModification", 5)
 
 local function ExecuteRandom(cmd)
