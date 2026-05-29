@@ -1,14 +1,9 @@
--- ====================================================================
--- 🔥 23l8l22 DRAGGABLE ULTIMATE PANEL v8 (COMBINED BOX & FIX SYNTAX) 🔥
--- ====================================================================
-
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
--- تنظيف الواجهة القديمة لمنع التداخل
 if PlayerGui:FindFirstChild("ZelTargetPanel_23l8l22") then
     PlayerGui.ZelTargetPanel_23l8l22:Destroy()
 end
@@ -32,7 +27,6 @@ local MainCorner = Instance.new("UICorner")
 MainCorner.CornerRadius = UDim.new(0, 12)
 MainCorner.Parent = MainFrame
 
--- نظام السحب السلس والذكي للموبايل
 local dragging, dragInput, dragStart, startPos
 local function update(input)
     local delta = input.Position - dragStart
@@ -57,7 +51,6 @@ UserInputService.InputChanged:Connect(function(input)
     if input == dragInput and dragging then update(input) end
 end)
 
--- بار النيون المتوهج
 local TopBar = Instance.new("Frame")
 TopBar.Size = UDim2.new(1, 0, 0, 4)
 TopBar.BackgroundColor3 = Color3.fromRGB(255, 0, 127)
@@ -68,7 +61,6 @@ local TopCorner = Instance.new("UICorner")
 TopCorner.CornerRadius = UDim.new(0, 12)
 TopCorner.Parent = TopBar
 
--- توقيع المالك الأسطوري
 local OwnerTitle = Instance.new("TextLabel")
 OwnerTitle.Size = UDim2.new(1, -40, 0, 35)
 OwnerTitle.Position = UDim2.new(0, 15, 0, 4)
@@ -80,7 +72,6 @@ OwnerTitle.Font = Enum.Font.GothamBold
 OwnerTitle.TextXAlignment = Enum.TextXAlignment.Left
 OwnerTitle.Parent = MainFrame
 
--- زر الإغلاق (X)
 local CloseBtn = Instance.new("TextButton")
 CloseBtn.Size = UDim2.new(0, 30, 0, 30)
 CloseBtn.Position = UDim2.new(1, -35, 0, 5)
@@ -92,9 +83,6 @@ CloseBtn.Font = Enum.Font.GothamBold
 CloseBtn.Parent = MainFrame
 CloseBtn.MouseButton1Click:Connect(function() ScreenGui:Destroy() end)
 
--- ====================================================================
--- [الجانب الأيسر: قائمة اللاعبين واختيار الهدف]
--- ====================================================================
 local ListLabel = Instance.new("TextLabel")
 ListLabel.Size = UDim2.new(0, 160, 0, 20)
 ListLabel.Position = UDim2.new(0, 15, 0, 45)
@@ -125,7 +113,6 @@ ListLayout.Parent = PlayerScroller
 
 local SelectedTargetName = ""
 
--- تحديث السيرفر بالكامل وإظهار الكل
 local function UpdatePlayerList()
     for _, child in pairs(PlayerScroller:GetChildren()) do
         if child:IsA("TextButton") then child:Destroy() end
@@ -163,7 +150,6 @@ UpdatePlayerList()
 Players.PlayerAdded:Connect(UpdatePlayerList)
 Players.PlayerRemoving:Connect(UpdatePlayerList)
 
--- تغيير اسم الزر إلى "تجهيز" فقط ⚙️
 local SetupButton = Instance.new("TextButton")
 SetupButton.Size = UDim2.new(0, 160, 0, 35)
 SetupButton.Position = UDim2.new(0, 15, 0, 235)
@@ -177,9 +163,6 @@ local SetupCorner = Instance.new("UICorner")
 SetupCorner.CornerRadius = UDim.new(0, 6)
 SetupCorner.Parent = SetupButton
 
--- ====================================================================
--- [الجانب الأيمن: الخانة المدمجة الجديدة والتشغيل]
--- ====================================================================
 local CustomLabel = Instance.new("TextLabel")
 CustomLabel.Size = UDim2.new(0, 160, 0, 20)
 CustomLabel.Position = UDim2.new(0, 185, 0, 45)
@@ -191,12 +174,11 @@ CustomLabel.Font = Enum.Font.GothamBold
 CustomLabel.TextXAlignment = Enum.TextXAlignment.Left
 CustomLabel.Parent = MainFrame
 
--- الخانة المدمجة الجديدة كلياً (تكتب فيها الأمر والاسم معاً)
 local CombinedBox = Instance.new("TextBox")
-CombinedBox.Size = UDim2.new(0, 160, 0, 72) -- جعلناها أكبر لتستوعب الكتابة المستمرة
+CombinedBox.Size = UDim2.new(0, 160, 0, 72)
 CombinedBox.Position = UDim2.new(0, 185, 0, 70)
 CombinedBox.BackgroundColor3 = Color3.fromRGB(16, 16, 22)
-CombinedBox.Text = ";nv user" -- النص التوضيحي الذي طلبته 🎯
+CombinedBox.Text = ";nv user"
 CombinedBox.TextColor3 = Color3.fromRGB(150, 150, 150)
 CombinedBox.TextSize = 11
 CombinedBox.Font = Enum.Font.Gotham
@@ -230,9 +212,6 @@ Credits.TextSize = 9
 Credits.Font = Enum.Font.GothamBold
 Credits.Parent = MainFrame
 
--- ====================================================================
--- [محرك الإرسال والتدمير السريع الخارق]
--- ====================================================================
 local spamActive = false
 local FinalPayload = ""
 
@@ -240,7 +219,6 @@ local function FireRemotes(cmdText)
     if cmdText == "" then return end
     local clean = cmdText:gsub("%s+$", "")
     local dotted = clean
-    -- إذا لم يبدأ بنقطة أو فاصلة منقوطة، نضع له نقطة لضمان عمل الريموت المباشر
     if not string.match(clean, "^%.") and not string.match(clean, "^;") then
         dotted = "." .. clean
     end
@@ -261,7 +239,6 @@ local function FireRemotes(cmdText)
     end)
 end
 
--- تعديل صياغة الفاصلة المنقوطة لتكون قبل كل أمر بالترتيب المطلب 🎯
 SetupButton.MouseButton1Click:Connect(function()
     if SelectedTargetName ~= "" then
         FinalPayload = ";nv " .. SelectedTargetName .. " ;re " .. SelectedTargetName .. " ;logs " .. SelectedTargetName .. " ;clogs " .. SelectedTargetName .. " ;nv " .. SelectedTargetName .. " ;re " .. SelectedTargetName .. " ;logs " .. SelectedTargetName .. " ;clogs " .. SelectedTargetName
@@ -280,11 +257,9 @@ AttackButton.MouseButton1Click:Connect(function()
         
         task.spawn(function()
             while spamActive do
-                -- إذا تم استخدام زر التجهيز ولم يتم تغيير نص الخانة المدمجة
                 if FinalPayload ~= "" and (CombinedBox.Text == ";nv user" or CombinedBox.Text == "") then
                     FireRemotes(FinalPayload)
                 else
-                    -- تشغيل النص المكتوب داخل الخانة المدمجة مباشرة
                     local customInput = CombinedBox.Text
                     if customInput ~= "" then
                         FireRemotes(customInput)
@@ -301,7 +276,6 @@ AttackButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- أنيميشن ألوان نيون متغيرة فخمة
 task.spawn(function()
     while true do
         for hue = 0, 1, 0.01 do
