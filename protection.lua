@@ -18,6 +18,19 @@ MainFrame.Active = true
 MainFrame.Draggable = true
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 12)
 
+-- زر X للإغلاق
+local CloseBtn = Instance.new("TextButton", MainFrame)
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(1, -35, 0, 5)
+CloseBtn.BackgroundTransparency = 1
+CloseBtn.Text = "✕"
+CloseBtn.TextColor3 = Color3.new(1, 1, 1)
+CloseBtn.TextSize = 20
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.MouseButton1Click:Connect(function() 
+    ScreenGui:Destroy() 
+end)
+
 local ProtectionBtn = Instance.new("TextButton", MainFrame)
 ProtectionBtn.Size = UDim2.new(0, 280, 0, 50)
 ProtectionBtn.Position = UDim2.new(0, 20, 0, 55)
@@ -28,7 +41,7 @@ ProtectionBtn.Font = Enum.Font.GothamBold
 Instance.new("UICorner", ProtectionBtn).CornerRadius = UDim.new(0, 8)
 
 task.spawn(function()
-    while true do
+    while ScreenGui.Parent do -- يشتغل طول ما الواجهة موجودة
         local HD = PlayerGui:FindFirstChild("HDAdminInterface")
         if HD then
             if HD:FindFirstChild("Notices") then
