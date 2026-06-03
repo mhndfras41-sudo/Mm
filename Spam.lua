@@ -57,7 +57,7 @@ local function CreateBtn(y, text, color)
     return btn
 end
 
-local SendBtn = CreateBtn(150, "SEND REMOTE", Color3.fromRGB(0, 120, 255))
+local SendBtn = CreateBtn(150, "SEND ONE", Color3.fromRGB(0, 120, 255))
 local SpamBtn = CreateBtn(200, "START SPAM", Color3.fromRGB(255, 60, 60))
 
 -- تنفيذ الأوامر عبر الريموتات الجديدة
