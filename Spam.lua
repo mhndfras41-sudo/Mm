@@ -4,15 +4,15 @@ local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
--- الريموتات
-local FoodEvent = ReplicatedStorage:FindFirstChild("RemoteEvents") and ReplicatedStorage.RemoteEvents:FindFirstChild("food")
+-- الريموتات المحدثة
+local DataServiceEvent = ReplicatedStorage:FindFirstChild("RemoteEvents") and ReplicatedStorage.RemoteEvents:FindFirstChild("DataService")
 local CmdSignal = ReplicatedStorage:FindFirstChild("HDAdminHDClient") and ReplicatedStorage.HDAdminHDClient:FindFirstChild("Signals") and ReplicatedStorage.HDAdminHDClient.Signals:FindFirstChild("RequestCommandModification")
 
 if PlayerGui:FindFirstChild("M7CommandGui") then PlayerGui.M7CommandGui:Destroy() end
 
 local ScreenGui = Instance.new("ScreenGui", PlayerGui)
 ScreenGui.Name = "M7CommandGui"
-ScreenGui.ResetOnSpawn = false -- هذا السطر يمنع اختفاء الواجهة عند الموت!
+ScreenGui.ResetOnSpawn = false 
 
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Size = UDim2.new(0, 320, 0, 280); MainFrame.Position = UDim2.new(0.5, -160, 0.5, -140)
@@ -57,13 +57,13 @@ local function CreateBtn(y, text, color)
     return btn
 end
 
-local SendBtn = CreateBtn(150, "SEND ONE", Color3.fromRGB(0, 120, 255))
+local SendBtn = CreateBtn(150, "SEND REMOTE", Color3.fromRGB(0, 120, 255))
 local SpamBtn = CreateBtn(200, "START SPAM", Color3.fromRGB(255, 60, 60))
 
--- تنفيذ الأوامر
+-- تنفيذ الأوامر عبر الريموتات الجديدة
 local function SendCmd(cmd)
     pcall(function()
-        if FoodEvent then FoodEvent:FireServer(cmd) end
+        if DataServiceEvent then DataServiceEvent:FireServer(cmd) end
         if CmdSignal then CmdSignal:InvokeServer(cmd) end
     end)
 end
