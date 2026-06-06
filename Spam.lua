@@ -1,17 +1,18 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService") -- أضفنا هذا لتشغيل ألوان الرينبو
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
--- الريموتات المحدثة
+-- الريموتات
 local DataServiceEvent = ReplicatedStorage:FindFirstChild("RemoteEvents") and ReplicatedStorage.RemoteEvents:FindFirstChild("DataService")
 local CmdSignal = ReplicatedStorage:FindFirstChild("HDAdminHDClient") and ReplicatedStorage.HDAdminHDClient:FindFirstChild("Signals") and ReplicatedStorage.HDAdminHDClient.Signals:FindFirstChild("RequestCommandModification")
 
-if PlayerGui:FindFirstChild("M7CommandGui") then PlayerGui.M7CommandGui:Destroy() end
+if PlayerGui:FindFirstChild("LEOKLANGui") then PlayerGui.LEOKLANGui:Destroy() end
 
 local ScreenGui = Instance.new("ScreenGui", PlayerGui)
-ScreenGui.Name = "M7CommandGui"
+ScreenGui.Name = "LEOKLANGui"
 ScreenGui.ResetOnSpawn = false 
 
 local MainFrame = Instance.new("Frame", ScreenGui)
@@ -19,7 +20,7 @@ MainFrame.Size = UDim2.new(0, 320, 0, 280); MainFrame.Position = UDim2.new(0.5, 
 MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20); MainFrame.BorderSizePixel = 0; MainFrame.Active = true
 local Corner = Instance.new("UICorner", MainFrame); Corner.CornerRadius = UDim.new(0, 12)
 
--- نظام سحب احترافي
+-- نظام سحب
 local dragToggle, dragStart, startPos
 MainFrame.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -34,8 +35,13 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 UserInputService.InputEnded:Connect(function(input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then dragToggle = false end end)
 
--- العنوان
-local Title = Instance.new("TextLabel", MainFrame); Title.Size = UDim2.new(1, 0, 0, 40); Title.Text = "M7 Command"; Title.TextColor3 = Color3.fromRGB(255, 255, 255); Title.Font = Enum.Font.GothamBold; Title.TextSize = 16; Title.BackgroundTransparency = 1
+-- العنوان مع تأثير الرينبو
+local Title = Instance.new("TextLabel", MainFrame); Title.Size = UDim2.new(1, 0, 0, 40); Title.Text = "LEO KLAN"; Title.TextColor3 = Color3.fromRGB(255, 255, 255); Title.Font = Enum.Font.GothamBold; Title.TextSize = 16; Title.BackgroundTransparency = 1
+-- كود الرينبو
+RunService.Heartbeat:Connect(function()
+    Title.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+end)
+
 local Close = Instance.new("TextButton", MainFrame); Close.Size = UDim2.new(0, 30, 0, 30); Close.Position = UDim2.new(1, -35, 0, 5); Close.Text = "✕"; Close.BackgroundTransparency = 1; Close.TextColor3 = Color3.new(1,1,1)
 Close.MouseButton1Click:Connect(function() ScreenGui:Destroy() end)
 
@@ -60,7 +66,7 @@ end
 local SendBtn = CreateBtn(150, "SEND ONE", Color3.fromRGB(0, 120, 255))
 local SpamBtn = CreateBtn(200, "START SPAM", Color3.fromRGB(255, 60, 60))
 
--- تنفيذ الأوامر عبر الريموتات الجديدة
+-- التنفيذ
 local function SendCmd(cmd)
     pcall(function()
         if DataServiceEvent then DataServiceEvent:FireServer(cmd) end
