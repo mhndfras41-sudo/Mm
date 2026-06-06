@@ -1,7 +1,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService") -- أضفنا هذا لتشغيل ألوان الرينبو
+local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
@@ -9,10 +9,10 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local DataServiceEvent = ReplicatedStorage:FindFirstChild("RemoteEvents") and ReplicatedStorage.RemoteEvents:FindFirstChild("DataService")
 local CmdSignal = ReplicatedStorage:FindFirstChild("HDAdminHDClient") and ReplicatedStorage.HDAdminHDClient:FindFirstChild("Signals") and ReplicatedStorage.HDAdminHDClient.Signals:FindFirstChild("RequestCommandModification")
 
-if PlayerGui:FindFirstChild("LEOKLANGui") then PlayerGui.LEOKLANGui:Destroy() end
+if PlayerGui:FindFirstChild("MHNDSPAMGui") then PlayerGui.MHNDSPAMGui:Destroy() end
 
 local ScreenGui = Instance.new("ScreenGui", PlayerGui)
-ScreenGui.Name = "LEOKLANGui"
+ScreenGui.Name = "MHNDSPAMGui"
 ScreenGui.ResetOnSpawn = false 
 
 local MainFrame = Instance.new("Frame", ScreenGui)
@@ -35,9 +35,8 @@ UserInputService.InputChanged:Connect(function(input)
 end)
 UserInputService.InputEnded:Connect(function(input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then dragToggle = false end end)
 
--- العنوان مع تأثير الرينبو
-local Title = Instance.new("TextLabel", MainFrame); Title.Size = UDim2.new(1, 0, 0, 40); Title.Text = "LEO KLAN"; Title.TextColor3 = Color3.fromRGB(255, 255, 255); Title.Font = Enum.Font.GothamBold; Title.TextSize = 16; Title.BackgroundTransparency = 1
--- كود الرينبو
+-- العنوان الجديد MHND SPAM مع تأثير الرينبو
+local Title = Instance.new("TextLabel", MainFrame); Title.Size = UDim2.new(1, 0, 0, 40); Title.Text = "MHND SPAM"; Title.TextColor3 = Color3.fromRGB(255, 255, 255); Title.Font = Enum.Font.GothamBold; Title.TextSize = 16; Title.BackgroundTransparency = 1
 RunService.Heartbeat:Connect(function()
     Title.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 1, 1)
 end)
