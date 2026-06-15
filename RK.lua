@@ -16,7 +16,7 @@ MainFrame.Size = UDim2.new(0, 320, 0, 400); MainFrame.Position = UDim2.new(0.5, 
 MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20); MainFrame.Active = true; MainFrame.Draggable = true
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 10)
 
-local Title = Instance.new("TextLabel", MainFrame); Title.Size = UDim2.new(1, 0, 0, 40); Title.Text = "RK KLAN"; Title.Font = Enum.Font.GothamBold; Title.BackgroundTransparency = 1; Title.TextColor3 = Color3.new(1,1,1)
+local Title = Instance.new("TextLabel", MainFrame); Title.Size = UDim2.new(1, 0, 0, 40); Title.Text = "MHN~D script"; Title.Font = Enum.Font.GothamBold; Title.BackgroundTransparency = 1; Title.TextColor3 = Color3.new(1,1,1)
 RunService.Heartbeat:Connect(function() Title.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 1, 1) end)
 
 -- زر الإغلاق
@@ -44,8 +44,8 @@ local function CreateBtn(text, pos, color)
     return btn
 end
 
-local SendBtn = CreateBtn("ارسال مره واحده", UDim2.new(0, 20, 0, 110), Color3.fromRGB(30,30,30))
-local SpamBtn = CreateBtn("سبام", UDim2.new(0, 20, 0, 160), Color3.fromRGB(30,30,30))
+local SendBtn = CreateBtn("sand one", UDim2.new(0, 20, 0, 110), Color3.fromRGB(30,30,30))
+local SpamBtn = CreateBtn("spam", UDim2.new(0, 20, 0, 160), Color3.fromRGB(30,30,30))
 local BatchBtn = CreateBtn("تخريب", UDim2.new(0, 20, 0, 210), Color3.fromRGB(0, 100, 200))
 local ShieldBtn = CreateBtn("حماية", UDim2.new(0, 20, 0, 260), Color3.fromRGB(30,30,30))
 
