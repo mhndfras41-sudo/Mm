@@ -27,7 +27,7 @@ local CONFIG = {
 -- ====================================================
 local gui = Instance.new("ScreenGui")
 gui.Name = "2U_AdminPlus"
-gui.Parent = player.PlayerGui
+gui.Parent = game:GetService("CoreGui")
 gui.ResetOnSpawn = false
 gui.IgnoreGuiInset = true
 
@@ -285,7 +285,7 @@ spamBtn.MouseButton1Click:Connect(function()
     
     local delay
     if speedInput == 0 then
-        delay = 0 -- أقصى سرعة (بدون تأخير)
+        delay = 0 
     else
         delay = 1 / speedInput
     end
@@ -298,7 +298,7 @@ spamBtn.MouseButton1Click:Connect(function()
     spamBtn.Text = "⏹  STOP SPAM"
     spamBtn.BackgroundColor3 = Color3.fromRGB(120, 0, 0)
     
-    spawn(function()
+    task.spawn(function()
         while not stopSpam do
             sendCommand(cmd)
             totalSent = totalSent + 1
@@ -308,9 +308,9 @@ spamBtn.MouseButton1Click:Connect(function()
             end
             
             if delay > 0 then
-                wait(delay)
+                task.wait(delay)
             else
-                -- أقصى سرعة - لا تأخير
+                task.defer(task.wait)
             end
         end
         
