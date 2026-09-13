@@ -1,7 +1,3 @@
--- ====================================================
--- 2U HUB - V6 | Red Button + White Text (No Neon)
--- ====================================================
-
 repeat wait() until game.Players.LocalPlayer
 local player = game.Players.LocalPlayer
 local runService = game:GetService("RunService")
@@ -9,9 +5,6 @@ local stats = game:GetService("Stats")
 local inputService = game:GetService("UserInputService")
 local tweenService = game:GetService("TweenService")
 
--- ====================================================
--- الإعدادات العامة
--- ====================================================
 local CONFIG = {
     PrimaryRed = Color3.fromRGB(220, 0, 0),
     NeonRed = Color3.fromRGB(255, 30, 30),
@@ -26,9 +19,6 @@ local CONFIG = {
     DiscordLink = "https://discord.gg/zfytGe4WFN"
 }
 
--- ====================================================
--- الواجهة الرئيسية
--- ====================================================
 local gui = Instance.new("ScreenGui")
 gui.Name = "2U_Hub_V6"
 gui.Parent = player.PlayerGui
@@ -50,9 +40,6 @@ bgGrad.Color = ColorSequence.new{
 bgGrad.Rotation = 90
 bgGrad.Parent = bg
 
--- ====================================================
--- خطوط عمودية متحركة
--- ====================================================
 local lines = {}
 for i = 1, 30 do
     local line = Instance.new("Frame")
@@ -78,9 +65,6 @@ runService.RenderStepped:Connect(function(dt)
     end
 end)
 
--- ====================================================
--- هالة وسط الشاشة
--- ====================================================
 local centerGlow = Instance.new("ImageLabel")
 centerGlow.Size = UDim2.new(0, 900, 0, 900)
 centerGlow.Position = UDim2.new(0.5, -450, 0.5, -450)
@@ -91,9 +75,6 @@ centerGlow.ImageTransparency = 0.85
 centerGlow.ZIndex = 1
 centerGlow.Parent = gui
 
--- ====================================================
--- الشعار 2U
--- ====================================================
 local logoShadow = Instance.new("TextLabel")
 logoShadow.Size = UDim2.new(1, 0, 0, 200)
 logoShadow.Position = UDim2.new(0, 6, 0.26, -94)
@@ -143,9 +124,6 @@ runService.RenderStepped:Connect(function(dt)
     logoShadow.TextSize = 180 * scale
 end)
 
--- ====================================================
--- WELCOME
--- ====================================================
 local welcome = Instance.new("TextLabel")
 welcome.Size = UDim2.new(1, 0, 0, 60)
 welcome.Position = UDim2.new(0, 0, 0.52, 0)
@@ -158,9 +136,6 @@ welcome.TextScaled = true
 welcome.ZIndex = 3
 welcome.Parent = gui
 
--- ====================================================
--- زر ENTER THE SCRIPT - RED + WHITE TEXT (No Neon)
--- ====================================================
 local enterBtn = Instance.new("TextButton")
 enterBtn.Size = UDim2.new(0, 520, 0, 85)
 enterBtn.Position = UDim2.new(0.5, -260, 0.68, 0)
@@ -188,9 +163,6 @@ enterBtn.MouseLeave:Connect(function()
     }):Play()
 end)
 
--- ====================================================
--- صندوق SYSTEM INFO
--- ====================================================
 local infoFrame = Instance.new("Frame")
 infoFrame.Size = UDim2.new(0, 300, 0, 200)
 infoFrame.Position = UDim2.new(0, 25, 0.36, 0)
@@ -252,9 +224,6 @@ infoText.TextYAlignment = Enum.TextYAlignment.Top
 infoText.ZIndex = 4
 infoText.Parent = infoFrame
 
--- ====================================================
--- صندوق SUPPORTED GAMES
--- ====================================================
 local gamesFrame = Instance.new("Frame")
 gamesFrame.Size = UDim2.new(0, 260, 0, 130)
 gamesFrame.Position = UDim2.new(1, -285, 0.36, 0)
@@ -361,9 +330,6 @@ card.MouseLeave:Connect(function()
     }):Play()
 end)
 
--- ====================================================
--- زر DISCORD و DEVELOPER
--- ====================================================
 local discordBtn = Instance.new("TextButton")
 discordBtn.Size = UDim2.new(0, 230, 0, 52)
 discordBtn.Position = UDim2.new(0.5, -240, 1, -130)
@@ -427,9 +393,6 @@ devBtn.MouseLeave:Connect(function()
     }):Play()
 end)
 
--- ====================================================
--- أزرار أعلى اليمين
--- ====================================================
 local topRightFrame = Instance.new("Frame")
 topRightFrame.Size = UDim2.new(0, 200, 0, 50)
 topRightFrame.Position = UDim2.new(1, -215, 0, 20)
@@ -476,9 +439,6 @@ closeBtn.MouseButton1Click:Connect(function()
     gui:Destroy()
 end)
 
--- ====================================================
--- زر القائمة أعلى اليسار
--- ====================================================
 local menuBtn = Instance.new("TextButton")
 menuBtn.Size = UDim2.new(0, 50, 0, 50)
 menuBtn.Position = UDim2.new(0, 20, 0, 20)
@@ -494,9 +454,6 @@ Instance.new("UICorner", menuBtn).CornerRadius = UDim.new(0, 12)
 menuBtn.ZIndex = 3
 menuBtn.Parent = gui
 
--- ====================================================
--- تحديث معلومات SYSTEM
--- ====================================================
 local startTime = tick()
 local frameCount = 0
 local lastFpsUpdate = tick()
@@ -539,9 +496,6 @@ task.spawn(function()
     end
 end)
 
--- ====================================================
--- زر ENTER (Hold to Start)
--- ====================================================
 local holdTime = 0
 local isHolding = false
 
