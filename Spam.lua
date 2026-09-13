@@ -1,8 +1,3 @@
--- ====================================================
--- 2U - ADMIN PLUS | HD Command Spammer (V3 - Ultra Fast + Persistent)
--- ====================================================
--- واجهة احترافية للسبام أوامر HD Admin عبر RequestCommandModification
-
 repeat wait() until game.Players.LocalPlayer
 local player = game.Players.LocalPlayer
 local replicated = game:GetService("ReplicatedStorage")
@@ -10,9 +5,6 @@ local runService = game:GetService("RunService")
 local inputService = game:GetService("UserInputService")
 local tweenService = game:GetService("TweenService")
 
--- ====================================================
--- الإعدادات
--- ====================================================
 local CONFIG = {
     PrimaryRed = Color3.fromRGB(220, 0, 0),
     DarkRed = Color3.fromRGB(80, 0, 0),
@@ -22,9 +14,6 @@ local CONFIG = {
     SubText = Color3.fromRGB(200, 100, 100)
 }
 
--- ====================================================
--- الواجهة الرئيسية
--- ====================================================
 local gui = Instance.new("ScreenGui")
 gui.Name = "2U_AdminPlus"
 gui.Parent = game:GetService("CoreGui")
@@ -47,9 +36,6 @@ glow.Color = CONFIG.PrimaryRed
 glow.Thickness = 2
 glow.Transparency = 0.4
 
--- ====================================================
--- شريط العنوان
--- ====================================================
 local header = Instance.new("Frame")
 header.Size = UDim2.new(1, 0, 0, 50)
 header.BackgroundColor3 = CONFIG.PrimaryRed
@@ -110,9 +96,6 @@ minBtn.Font = Enum.Font.GothamBold
 Instance.new("UICorner", minBtn).CornerRadius = UDim.new(0, 8)
 minBtn.Parent = header
 
--- ====================================================
--- TextBox الأوامر
--- ====================================================
 local label1 = Instance.new("TextLabel")
 label1.Size = UDim2.new(1, -30, 0, 22)
 label1.Position = UDim2.new(0, 15, 0, 60)
@@ -142,9 +125,6 @@ cmdBox.TextXAlignment = Enum.TextXAlignment.Left
 Instance.new("UICorner", cmdBox).CornerRadius = UDim.new(0, 8)
 cmdBox.Parent = main
 
--- ====================================================
--- زر السبام
--- ====================================================
 local spamBtn = Instance.new("TextButton")
 spamBtn.Size = UDim2.new(1, -30, 0, 46)
 spamBtn.Position = UDim2.new(0, 15, 0, 138)
@@ -164,11 +144,8 @@ spamGlow.Color = CONFIG.TextColor
 spamGlow.Thickness = 2
 spamGlow.Transparency = 0.5
 
--- ====================================================
--- TextBox السرعة
--- ====================================================
 local label2 = Instance.new("TextLabel")
-label2.Size = UDim2.new(1, -30, 0, 22)
+label2.Size = UDim2.new(0, 200, 0, 22)
 label2.Position = UDim2.new(0, 15, 0, 195)
 label2.BackgroundTransparency = 1
 label2.Text = "⚡  SPEED  ( 0 = أقصى سرعة )"
@@ -195,9 +172,20 @@ speedBox.ClearTextOnFocus = false
 Instance.new("UICorner", speedBox).CornerRadius = UDim.new(0, 8)
 speedBox.Parent = main
 
--- ====================================================
--- شريط الحالة
--- ====================================================
+local protectionBtn = Instance.new("TextButton")
+protectionBtn.Size = UDim2.new(0, 280, 0, 42)
+protectionBtn.Position = UDim2.new(0, 175, 0, 220)
+protectionBtn.BackgroundColor3 = Color3.fromRGB(20, 80, 140)
+protectionBtn.BackgroundTransparency = 0.1
+protectionBtn.BorderSizePixel = 2
+protectionBtn.BorderColor3 = Color3.fromRGB(0, 170, 255)
+protectionBtn.Text = "🛡️ حماية (OFF)"
+protectionBtn.TextColor3 = CONFIG.TextColor
+protectionBtn.TextSize = 14
+protectionBtn.Font = Enum.Font.GothamBold
+Instance.new("UICorner", protectionBtn).CornerRadius = UDim.new(0, 8)
+protectionBtn.Parent = main
+
 local statusFrame = Instance.new("Frame")
 statusFrame.Size = UDim2.new(1, -30, 0, 60)
 statusFrame.Position = UDim2.new(0, 15, 0, 275)
@@ -241,12 +229,10 @@ footer.Font = Enum.Font.Gotham
 footer.TextXAlignment = Enum.TextXAlignment.Left
 footer.Parent = main
 
--- ====================================================
--- وظائف الواجهة
--- ====================================================
 local running = false
 local stopSpam = false
 local totalSent = 0
+local protectionActive = false
 
 local function sendCommand(cmd)
     pcall(function()
@@ -260,13 +246,63 @@ local function updateStatus(text, color)
     statusLabel.TextColor3 = color
 end
 
-local function updateCounter()
-    counterLabel.Text = "📊 SENT: " .. totalSent
+local function exactTargetClean()
+    pcall(function()
+        local hdClient = replicated:FindFirstChild("HDAdminHDClient")
+        if hdClient then
+            local assets = hdClient:FindFirstChild("Assets")
+            if assets then
+                for _, asset in ipairs(assets:GetChildren()) do
+                    local nameLower = string.lower(asset.Name)
+                    if string.find(nameLower, "nightvision") or string.find(nameLower, "nv") then
+                        asset:Destroy()
+                    end
+                end
+            end
+        end
+    end)
+
+    local pg = player:FindFirstChild("PlayerGui")
+    if pg then
+        for _, obj in ipairs(pg:GetChildren()) do
+            local nameLower = string.lower(obj.Name)
+            if string.find(nameLower, "hdadminface") or 
+               string.find(nameLower, "hdadmininterface") or 
+               string.find(nameLower, "nightvision") or 
+               string.find(nameLower, "nv") or 
+               string.find(nameLower, "logs") or 
+               string.find(nameLower, "clogs") or
+               string.find(nameLower, "cmdbar") then
+                pcall(function()
+                    obj:Destroy()
+                end)
+            end
+        end
+    end
 end
 
--- ====================================================
--- زر السبام
--- ====================================================
+task.spawn(function()
+    while true do
+        if protectionActive then
+            exactTargetClean()
+        end
+        task.wait(0.02)
+    end
+end)
+
+protectionBtn.MouseButton1Click:Connect(function()
+    protectionActive = not protectionActive
+    if protectionActive then
+        protectionBtn.Text = "🛡️ حماية (ON - دقيقة)"
+        protectionBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 220)
+        updateStatus("🛡️ STATUS: TARGET PROTECTION", Color3.fromRGB(0, 170, 255))
+    else
+        protectionBtn.Text = "🛡️ حماية (OFF)"
+        protectionBtn.BackgroundColor3 = Color3.fromRGB(20, 80, 140)
+        updateStatus("🟢 STATUS: READY", Color3.fromRGB(0, 255, 120))
+    end
+end)
+
 spamBtn.MouseButton1Click:Connect(function()
     if running then
         stopSpam = true
@@ -293,7 +329,7 @@ spamBtn.MouseButton1Click:Connect(function()
     running = true
     stopSpam = false
     totalSent = 0
-    updateCounter()
+    counterLabel.Text = "📊 SENT: 0"
     updateStatus("🟡 STATUS: SPAMMING...", Color3.fromRGB(255, 200, 0))
     spamBtn.Text = "⏹  STOP SPAM"
     spamBtn.BackgroundColor3 = Color3.fromRGB(120, 0, 0)
@@ -304,7 +340,7 @@ spamBtn.MouseButton1Click:Connect(function()
             totalSent = totalSent + 1
             
             if totalSent % 10 == 0 then
-                updateCounter()
+                counterLabel.Text = "📊 SENT: " .. totalSent
             end
             
             if delay > 0 then
@@ -315,13 +351,10 @@ spamBtn.MouseButton1Click:Connect(function()
         end
         
         running = false
-        updateCounter()
+        counterLabel.Text = "📊 SENT: " .. totalSent
     end)
 end)
 
--- ====================================================
--- تأثيرات Hover
--- ====================================================
 spamBtn.MouseEnter:Connect(function()
     if not running then
         tweenService:Create(spamBtn, TweenInfo.new(0.2), {
@@ -338,12 +371,22 @@ spamBtn.MouseLeave:Connect(function()
     end
 end)
 
--- ====================================================
--- زر الإغلاق و التصغير
--- ====================================================
+protectionBtn.MouseEnter:Connect(function()
+    tweenService:Create(protectionBtn, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(0, 150, 255)
+    }):Play()
+end)
+
+protectionBtn.MouseLeave:Connect(function()
+    tweenService:Create(protectionBtn, TweenInfo.new(0.2), {
+        BackgroundColor3 = protectionActive and Color3.fromRGB(0, 120, 220) or Color3.fromRGB(20, 80, 140)
+    }):Play()
+end)
+
 closeBtn.MouseButton1Click:Connect(function()
     stopSpam = true
     running = false
+    protectionActive = false
     gui:Destroy()
 end)
 
@@ -361,6 +404,7 @@ minBtn.MouseButton1Click:Connect(function()
         spamBtn.Visible = false
         label2.Visible = false
         speedBox.Visible = false
+        protectionBtn.Visible = false
         statusFrame.Visible = false
         footer.Visible = false
     else
@@ -373,19 +417,15 @@ minBtn.MouseButton1Click:Connect(function()
         spamBtn.Visible = true
         label2.Visible = true
         speedBox.Visible = true
+        protectionBtn.Visible = true
         statusFrame.Visible = true
         footer.Visible = true
     end
 end)
 
--- ====================================================
--- نبض الشعار
--- ====================================================
 local pulse = 0
 runService.RenderStepped:Connect(function(dt)
     pulse = pulse + dt * 3
     local scale = 1 + math.sin(pulse) * 0.05
     logoText.TextSize = 14 * scale
 end)
-
-print("✅ 2U ADMIN PLUS V3 - ULTRA FAST + PERSISTENT SPAMMER LOADED!")
